@@ -1,0 +1,193 @@
+#summary Cloak of Darkness in PyF
+
+= Cloak of Darkness =
+
+Cloak of Darkness is an interactive fiction by Roger Firth designed to demonstrate differences between IF authoring systems. You can check out its different implementations on [http://www.firthworks.com/roger/cloak/ Firth's site]. For the PyF implementation, see below.
+
+{{{
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- cod.script.xml -->
+<!-- Script is used to define the actual form of the game world, how objects
+are placed throughout it and their text content. -->
+<script xmlns:props="pyf.props">
+	<!-- Import pyf.props as an XML namespace. -->
+	
+	<Foyer name="Foyer of the Opera House">
+		<!-- Foyer is a room defined in the source - here we instantiate it with the name
+		"Foyer of the Opera House". -->
+		
+		<exits>
+			<west><Cloakroom /></west>
+			<south><Bar /></south>
+			<!-- Cloakroom and Bar are classes defined in the source. -->
+			<north>You've only just arrived, and besides, the weather 
+			outside seems to be getting worse.</north>
+			<!-- Evaluated as a string. -->
+		</exits>
+
+		<!-- ldesc is automatically turned into this object's long description. -->
+		<ldesc>You are standing in a spacious hall, splendidly decorated in red 
+		and gold, with glittering chandeliers overhead. The entrance from 
+		the street is to the north, and there are doorways south and west.</ldesc>
+		
+		<Player>
+			<!-- Player class defined in the source. Any class node that's contained in
+			another class node is automatically moved to the containing object. That is to
+			say the player starts in the foyer. -->
+			
+			<ldesc>As handsome as ever.</ldesc>
+			
+			<Cloak name="cloak" adjective="handsome, velvet, dark, black, velvet, satin">
+				<ldesc>A handsome cloak, of velvet trimmed with satin, and slightly 
+				spattered with raindrops. Its blackness is so deep that it almost 
+				seems to suck light from the room.</ldesc>
+				
+				<!-- Mobile is a property class residing in pyf.props. Here the property
+				is instantiated and moved to the cloak object. This allows the player
+				to move the cloak, take and drop it. -->
+				<props:Mobile />
+				
+				<!-- Wearable defines object as something you can wear. -->
+				<props:Wearable>
+					<!-- Values are by default evaluated as strings. Specifying type as
+					"bool" here allows the XML parser to evaluate the value as 
+					bool(True). Here we're saying that the cloak is worn by default. -->
+					<worn type="bool">True</worn>
+				</props:Wearable>
+				
+				<props:LightSource>
+					<inverse type="bool">True</inverse>
+					<!-- Taking the cloak into a room will make it dark, 
+					instead of lit. -->
+				</props:LightSource>
+			</Cloak>
+		</Player>
+
+	</Foyer>
+	
+	<Cloakroom name="Cloakroom">
+
+		<exits>
+			<east><Foyer /></east>
+		</exits>
+		
+		<Hook name="hook, peg" adjective="brass, small">
+			<ldesc>It's just a small brass hook.</ldesc>
+			
+			<!-- Allow putting things on the hook. -->
+			<props:Surface />
+		</Hook>
+		
+		<ldesc>The walls of this small room were clearly once lined with hooks, 
+		though now only one remains. The exit is a door to the east.</ldesc>
+		
+	</Cloakroom>
+	
+	<Bar>
+		<exits>
+			<north><Foyer /></north>
+		</exits>
+
+		<ldesc>The bar, much rougher than you'd have guessed after the opulence of the 
+		foyer to the north, is completely empty. There seems to be some sort of message 
+		scrawled in the sawdust on the floor.</ldesc>
+		
+		<props:Dark>
+			<!-- The room is lit by default, taking the cloak into the room 
+			makes it dark. -->
+			<light type="bool">True</light>
+		</props:Dark>
+		
+		<Message name="message, sawdust"/>
+	</Bar>
+</script>
+}}}
+
+{{{
+# cod.py
+'''Python source. Used to define the actual game logic.'''
+from pyf import items, game
+
+class Game(game.Game):
+	'''First we subclass the Game object to create our own game and specify some metadata.'''
+	
+	name = "Cloak of Darkness"
+	author = "Roger Firth"
+	version = "1.0"
+	
+	description = """Hurrying through the rainswept November night, you're glad to see the
+	    bright lights of the Opera House. It's surprising that there aren't more
+	    people about but, hey, what do you expect in a cheap demo game...?"""
+	
+	script = open('cod.script.xml')
+	
+	def ending(self, output):
+		if Bar.inst.counter > 1:
+			'''Output object is used for writing all responses for the player.'''
+			output.write("*** You have lost ***")
+		else:
+			output.write("*** You have won ***")
+game = Game()
+
+class Player(items.Actor):
+	pass
+class Foyer(items.Room):
+	pass
+class Cloakroom(items.Room):
+	pass
+	
+class Bar(items.Room):
+	name = "Foyer bar"
+	
+	def init(self):
+		self.counter = 0
+	
+	def handle(self, sentence, output):
+		'''The user can't interact with objects in the dark room, but we still need to
+		show an alternative message and add to our counter.'''
+		
+		if not self.Dark.lit():
+			self.counter += 1
+			if self.counter > 1:
+				output.write("It's best not to mess around in the dark!")
+			else:
+				output.write("In the dark? You could easily disturb something.")
+	
+class Hook(items.Item):
+	def handle(self, sentence, output):
+		if sentence == 'hang cloak on *self':
+			'''Cloak.inst = cloak instance'''
+			Cloak.inst.move(self)
+			output.write("You finish hanging your cloak on the hook.")
+		
+class Message(items.Item):
+	def handle(self, sentence, output):
+		if sentence == 'read *self' or sentence == 'examine *self':
+			output.write('The message, neatly marked in the sawdust, reads...', False)
+			self.game.end(output)
+			'''End the game.'''
+			
+def cloakMoved(self, event):
+	'''This event handler is called to check if the cloak can be moved and return
+	a response if not.'''
+	if event.destination not in (Player, Hook, Cloakroom):
+		event.output.write("This isn't the best place to leave a smart cloak lying around.")
+
+class Cloak(items.Item):
+	def init(self):
+		'''Listen to move events.'''
+		self.addEventListener(self.EVT_MOVED, (self, cloakMoved))
+
+'''Create the game world based on our script.'''
+game.initFromScript(locals())
+
+'''Set Player object as the actor.'''
+game.setActor(Player.inst)
+
+if __name__ == '__main__':
+	'''Finally we need an interface so that you can actually play the game. '''
+	import pyf.interface
+	pyf.interface.runGame(game)
+}}}
+
+[[Category: Games Written in PyF]]
