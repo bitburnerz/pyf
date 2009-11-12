@@ -1,4 +1,5 @@
 #summary Cloak of Darkness in PyF
+#labels PyFGames
 
 = Cloak of Darkness =
 
