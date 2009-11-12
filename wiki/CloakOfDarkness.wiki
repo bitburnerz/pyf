@@ -190,5 +190,3 @@ if __name__ == '__main__':
 	import pyf.interface
 	pyf.interface.runGame(game)
 }}}
-
-[[Category: Games Written in PyF]]
