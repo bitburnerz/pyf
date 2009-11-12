@@ -1,4 +1,5 @@
 #summary wiki sidebar
 #labels Deprecated
 
-  * [GettingStarted Getting Started]
+  * [GettingStarted Learn PyF]
+  * [Download Download PyF]
