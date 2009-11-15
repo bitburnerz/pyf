@@ -40,5 +40,5 @@ This creates a game world, adding a single room with a description and the playe
   * PyF is designed to be completely modular. You can customize your game engine as much as you like, from changing the standard responses to completely rewriting the input handling process.
 
 == How to get started? ==
-  * [DownloadPyF Download PyF]
+  * [Download Download PyF]
   * Read our [GettingStarted getting started guide]
