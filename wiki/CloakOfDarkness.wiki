@@ -9,12 +9,28 @@ Cloak of Darkness is an interactive fiction by Roger Firth designed to demonstra
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- cod.script.xml -->
 <!-- Script is used to define the actual form of the game world, how objects
-are placed throughout it and their text content. -->
+are placed throughout it, and their text content. -->
 <script xmlns:props="pyf.props">
-	<!-- Import pyf.props as an XML namespace. -->
+	<!-- Import module pyf.props as an XML namespace. -->
+	<game>
+		<!-- game is our Game object instantiated in the source -->
+		<attr>
+			<!-- Tags inside <attr> are assigned to the object dict after 
+			instantiation. That means after our script is read game.name is 
+			"Cloak of Darkness" and game.author is "Roger Firth" and so on. -->
+			<name>Cloak of Darkness</name>
+			<author>Roger Firth</author>
+			<version>1.0</version>
+			<description>Hurrying through the rainswept November night, you're glad to 
+				see the bright lights of the Opera House. It's surprising that there 
+				aren't more people about but, hey, what do you expect in a 
+				cheap demo game...?</description>
+				
+		</attr>
+	</game>
 	
 	<Foyer name="Foyer of the Opera House">
-		<!-- Foyer is a room defined in the source - here we instantiate it with the name
+		<!-- Foyer is a class defined in the source - here we instantiate it with the name
 		"Foyer of the Opera House". -->
 		
 		<exits>
@@ -23,18 +39,17 @@ are placed throughout it and their text content. -->
 			<!-- Cloakroom and Bar are classes defined in the source. -->
 			<north>You've only just arrived, and besides, the weather 
 			outside seems to be getting worse.</north>
-			<!-- Evaluated as a string. -->
 		</exits>
 
-		<!-- ldesc is automatically turned into this object's long description. -->
+		<!-- ldesc is automatically turned into the item's long description. -->
 		<ldesc>You are standing in a spacious hall, splendidly decorated in red 
 		and gold, with glittering chandeliers overhead. The entrance from 
 		the street is to the north, and there are doorways south and west.</ldesc>
 		
 		<Player>
 			<!-- Player class defined in the source. Any class node that's contained in
-			another class node is automatically moved to the containing object. That is to
-			say the player starts in the foyer. -->
+			another class node is automatically moved to the containing object. So after
+			this is read, Player is moved to its starting place in Foyer. -->
 			
 			<ldesc>As handsome as ever.</ldesc>
 			
@@ -53,11 +68,15 @@ are placed throughout it and their text content. -->
 					<!-- Values are by default evaluated as strings. Specifying type as
 					"bool" here allows the XML parser to evaluate the value as 
 					bool(True). Here we're saying that the cloak is worn by default. -->
-					<worn type="bool">True</worn>
+					<attr>
+						<worn type="bool">True</worn>
+					</attr>
 				</props:Wearable>
 				
 				<props:LightSource>
-					<inverse type="bool">True</inverse>
+					<attr>
+						<inverse type="bool">True</inverse>
+					</attr>
 					<!-- Taking the cloak into a room will make it dark, 
 					instead of lit. -->
 				</props:LightSource>
@@ -67,10 +86,16 @@ are placed throughout it and their text content. -->
 	</Foyer>
 	
 	<Cloakroom name="Cloakroom">
-
+		
+		<ldesc>The walls of this small room were clearly once lined with hooks, 
+		though now only one remains. The exit is a door to the east.</ldesc>
+		
 		<exits>
 			<east><Foyer /></east>
 		</exits>
+		<props:Room/>
+		<!-- Automatically lists undescribed things in the room. We add it here since
+		it's possible to drop the cloak on the floor. -->
 		
 		<Hook name="hook, peg" adjective="brass, small">
 			<ldesc>It's just a small brass hook.</ldesc>
@@ -79,12 +104,9 @@ are placed throughout it and their text content. -->
 			<props:Surface />
 		</Hook>
 		
-		<ldesc>The walls of this small room were clearly once lined with hooks, 
-		though now only one remains. The exit is a door to the east.</ldesc>
-		
 	</Cloakroom>
 	
-	<Bar>
+	<Bar name="Foyer bar">
 		<exits>
 			<north><Foyer /></north>
 		</exits>
@@ -96,7 +118,9 @@ are placed throughout it and their text content. -->
 		<props:Dark>
 			<!-- The room is lit by default, taking the cloak into the room 
 			makes it dark. -->
-			<light type="bool">True</light>
+			<attr>
+				<light type="bool">True</light>
+			</attr>
 		</props:Dark>
 		
 		<Message name="message, sawdust"/>
@@ -110,24 +134,18 @@ are placed throughout it and their text content. -->
 from pyf import items, game
 
 class Game(game.Game):
-	'''First we subclass the Game object to create our own game and specify some metadata.'''
-	
-	name = "Cloak of Darkness"
-	author = "Roger Firth"
-	version = "1.0"
-	
-	description = """Hurrying through the rainswept November night, you're glad to see the
-	    bright lights of the Opera House. It's surprising that there aren't more
-	    people about but, hey, what do you expect in a cheap demo game...?"""
-	
+	'''First we subclass the Game object to create our own game.'''
 	script = open('cod.script.xml')
+	'''Script is defined as a file-like object.'''
 	
 	def ending(self, output):
+		'''Called after game.end() is called.'''
 		if Bar.inst.counter > 1:
 			'''Output object is used for writing all responses for the player.'''
 			output.write("*** You have lost ***")
 		else:
 			output.write("*** You have won ***")
+			
 game = Game()
 
 class Player(items.Actor):
@@ -138,27 +156,28 @@ class Cloakroom(items.Room):
 	pass
 	
 class Bar(items.Room):
-	name = "Foyer bar"
-	
 	def init(self):
 		self.counter = 0
+		self.addEventListener(self.EVT_OWNED_ITEM_HANDLE, (self, barItemHandled))
+		'''EVT_OWNED_ITEM_HANDLE is fired before the player tries to handle
+		items in a container, this time a room.'''
+
+def barItemHandled(self, event):
+	'''The user can't interact with objects in the dark room, but we still need to
+	show an alternative message and add to our counter.'''
 	
-	def handle(self, sentence, output):
-		'''The user can't interact with objects in the dark room, but we still need to
-		show an alternative message and add to our counter.'''
-		
-		if not self.Dark.lit():
-			self.counter += 1
-			if self.counter > 1:
-				output.write("It's best not to mess around in the dark!")
-			else:
-				output.write("In the dark? You could easily disturb something.")
+	if not self.Dark.lit:
+		self.counter += 1
+		if self.counter > 1:
+			event.output.write("It's best not to mess around in the dark!")
+		else:
+			event.output.write("In the dark? You could easily disturb something.")
 	
 class Hook(items.Item):
 	def handle(self, sentence, output):
 		if sentence == 'hang cloak on *self':
-			'''Cloak.inst = cloak instance'''
 			Cloak.inst.move(self)
+			'''Cloak.inst = cloak instance'''
 			output.write("You finish hanging your cloak on the hook.")
 		
 class Message(items.Item):
@@ -172,7 +191,8 @@ def cloakMoved(self, event):
 	'''This event handler is called to check if the cloak can be moved and return
 	a response if not.'''
 	if event.destination not in (Player, Hook, Cloakroom):
-		event.output.write("This isn't the best place to leave a smart cloak lying around.")
+		if event.output:
+			event.output.write("This isn't the best place to leave a smart cloak lying around.")
 
 class Cloak(items.Item):
 	def init(self):
