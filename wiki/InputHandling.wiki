@@ -1,5 +1,5 @@
 #summary Overview of Input Handling
-#labels Featured
+#labels Featured,Manual
 
 While the PyF default library can handle most typical commands used in adventure games for you, you'll eventually run into a situation where you want to handle the user input in your own code. This article gives an overview of matching user input and writing output in PyF.
 
