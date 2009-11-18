@@ -27,13 +27,14 @@ class Player(items.Actor):
 	owner = Room.inst
 game.addItem(Player())
 
-game.setActor(Player.inst)
+game.actor = Player.inst
 interface.runGame(game)
 }}}
 
 This creates a game world, adding a single room with a description and the player object to it.
 
 == Why choose PyF? ==
+  * Because PyF allows separating the world model from the game logic, the game source code is easy to read.
   * PyF is written in an interpreted language. That means that PyF is available on every platform that Python is ported to. So you can write a game and have it run on Windows, OS X and Linux without changing anything.
   * Unlike some other IF engines, PyF doesn't require you to learn a specialized language that you can only use to write IF.
   * In PyF you can easily handle any input not supported by the standard library. Adding new synonyms for your game is trivial.
