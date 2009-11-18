@@ -1,0 +1,3 @@
+#summary PyF API Reference
+
+The latest reference can be found on [http://code.google.com/p/pyf/downloads/list the download page]. If your version doesn't have a reference available for download, you can generate it using [http://epydoc.sourceforge.net/ Epydoc].
