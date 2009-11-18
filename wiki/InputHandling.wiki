@@ -48,7 +48,7 @@ True
 True
 }}}
 
-For more info on `Sentence` objects see [Sentence Sentences In Depth]
+For more info on `Sentence` objects see [Sentence Sentences In Depth].
 
 ==The Output Object==
 `Output` objects are used to write output for the user. `Output.write('Hello world!')` writes a string into the `output` and it's displayed as soon as the input handling is done. Although superficially it seems like your basic `print` command, it's different in many respects.
@@ -60,7 +60,7 @@ def handle(self, sentence, output):
 	output.write("This too.")
 	output.write("This is not.")
 }}}
-Typically this is used to write additional messages about what the player does - like display `(first standing up)` if the player does something that requires him to be standing. More importantly, however, it's used to tell the parser that the input has been succesfully handled and whether a standard response should be shown. Compare the following:
+Typically this is used to write additional messages about what the player does - like display `(first standing up)` if the player does something that requires him to be standing. More importantly, however, it's used to tell the parser that the input has been succesfully handled and the standard response shouldn't be shown. Compare the following:
 {{{
 def handle(self, sentence, output):
 	if sentence == 'eat *self'
@@ -81,4 +81,4 @@ def handle(self, sentence, output):
 > eat pie
 You munch down the delicious pie.
 }}}
-You can also add some inline scripting to your output. For more info see [InlineScripting Inline Scripting].
+You can also add inline scripting to your output. For more info see [InlineScripting Inline Scripting].
