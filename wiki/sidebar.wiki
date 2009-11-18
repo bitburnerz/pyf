@@ -3,3 +3,5 @@
 
   * [GettingStarted Learn PyF]
   * [Download Download PyF]
+    ===Learn PyF===
+    * [InputHandling Handling User Input]
