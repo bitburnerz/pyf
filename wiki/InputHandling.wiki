@@ -1,4 +1,5 @@
 #summary Overview of Input Handling
+#labels Featured
 
 While the PyF default library can handle most typical commands used in adventure games for you, you'll eventually run into a situation where you want to handle the user input in your own code. This article gives an overview of matching user input and writing output in PyF.
 
@@ -11,7 +12,7 @@ def handle(self, sentence, output):
 		output.write("You poke the strange orb. It doesn't seem to react to touch.")
 }}}
 
-A `handle` method is invoked every time an object needs to handle user input. It's used to match input and write output accordingly - here the player is trying to push the strange orb, so we display a message saying it doesn't react to touch.
+The `handle` method is invoked every time an object needs to handle user input. It's used to match input and write output accordingly - here the player is trying to push the strange orb, so we display a message saying it doesn't react to touch.
 
 ==Matching User Input==
 
