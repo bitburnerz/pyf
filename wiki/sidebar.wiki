@@ -1,6 +1,7 @@
 #summary wiki sidebar
 #labels Deprecated
 
+  * [Introduction Introduction to PyF]
   * [Download Download PyF]
   * *Learn PyF*
     * [GettingStarted Get started]
