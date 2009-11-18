@@ -1,0 +1,52 @@
+#summary Overview of Input Handling
+
+While the PyF default library can handle most typical commands used in adventure games for you, you'll eventually run into a situation where you want to handle the user input in your own code. This article gives an overview of matching user input and writing output in PyF.
+
+=The Handle Method=
+
+A typical `handle` method looks like this:
+{{{
+def handle(self, sentence, output):
+	if sentence == 'push *self':
+		output.write("You poke the strange orb. It doesn't seem to react to touch.")
+}}}
+
+A `handle` method is invoked every time an object needs to handle user input. It's used to match input and write output accordingly - here the player is trying to push the strange orb, so we display a message saying it doesn't react to touch.
+
+==Matching User Input==
+
+Matching a `sentence` can look a lot like matching any string, but the process underneath is slightly more complex. When the game lib parses user input into a `sentence` it's matched against every `Word` that has been defined in the game. Word is a simple string container that includes a word, its synonyms and some wildcards, and as such allows matches like the following:
+{{{
+>>> word = pyf.lib.Move('take', 'pick up', 'get')
+>>> word == 'take'
+True
+>>> word == 'pick up'
+True
+>>> word == '*verb'
+True
+>>> word == '*move'
+True
+>>> print word
+take
+>>> print type(word)
+<class 'pyf.lib.Move'>
+}}} 
+The list of wildcards is determined by the `Word` object's inheritance tree. `Move` is a subclass of `Touch`, which is a subclass of `Verb`. As such it matches any of the keywords `*move`, `*touch` and `*verb`. Some keywords like `*self`, which matches the object that's currently handling input, are added at runtime. All words also subclass `Word`, but `*word` isn't matched by any `Word` instance.
+
+==The Sentence Object==
+A `Sentence` object is simply a container for `Word` objects. When it's matched against a string, the sentence will simply go through every word in the string and see if it equals its word in the same position.
+
+{{{
+>>> lib = pyf.standardlib.standardLib() # get the standard library
+>>> lib.append(pyf.lib.Noun('magic wand', 'wand')) # add a noun to the standard library
+>>> sentence = pyf.lib.Sentence('take magic wand') # construct a sentence with user input
+>>> lib.parse(sentence) # parse the sentence
+>>> sentence == 'take magic wand'
+True
+>>> sentence == 'take wand'
+True
+>>> sentence == 'take the magic wand'
+True
+>>> sentence == '*verb *noun'
+True
+}}}
