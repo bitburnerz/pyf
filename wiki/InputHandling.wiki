@@ -23,14 +23,12 @@ Matching a `sentence` can look a lot like matching any string, but the process u
 True
 >>> word == 'pick up'
 True
->>> word == '*verb'
-True
 >>> word == '*move'
+True
+>>> word == '*verb'
 True
 >>> print word
 take
->>> print type(word)
-<class 'pyf.lib.Move'>
 }}} 
 The list of wildcards is determined by the `Word` object's inheritance tree. `Move` is a subclass of `Touch`, which is a subclass of `Verb`. As such it matches any of the keywords `*move`, `*touch` and `*verb`. Some keywords like `*self`, which matches the object that's currently handling input, are added at runtime. All words also subclass `Word`, but `*word` isn't matched by any `Word` instance.
 
