@@ -6,3 +6,4 @@
   * *Learn PyF*
     * [GettingStarted Get started]
     * [InputHandling Handling User Input]
+  * [APIReference API Reference]
