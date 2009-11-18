@@ -1,7 +1,7 @@
 #summary wiki sidebar
 #labels Deprecated
 
-  * [GettingStarted Learn PyF]
   * [Download Download PyF]
   * *Learn PyF*
+    * [GettingStarted Get started]
     * [InputHandling Handling User Input]
