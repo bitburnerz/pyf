@@ -51,7 +51,7 @@ For more info on `Sentence` objects see [Sentence Sentences In Depth].
 ==The Output Object==
 `Output` objects are used to write output for the user. `Output.write('Hello world!')` writes a string into the `output` and it's displayed as soon as the input handling is done. Although superficially it seems like your basic `print` command, it's different in many respects.
 
-As soon as something is written to an `Output` it stops the input handling process and returns what has been written. This can be averted by adding `False` to the argument list, which allows you to write multiple lines.
+As soon as something is written to an `Output` it stops the input handling process and returns what has been written. This can be averted by adding `False` to the argument list, when you want to write multiple lines.
 {{{
 def handle(self, sentence, output):
 	output.write("This is shown.", False)
