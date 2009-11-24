@@ -2,7 +2,8 @@
 #labels Featured,Phase-Deploy
 = Download =
 
-Head over to the [http://code.google.com/p/pyf/downloads/list download page].
+  * *[http://pyf.googlecode.com/files/pyf-0.7b.tar.gz Download PyF 0.7b]*
+  * *[http://pyf.googlecode.com/files/pyf-api-07b.zip 0.7b API Reference]*
 
 = Installing PyF =
 
