@@ -2,11 +2,11 @@
 #labels Featured,Phase-Deploy
 = Download =
 
-No official releases of PyF are currently available. Right now the best thing you can do is [http://code.google.com/p/pyf/source/checkout check out the source].
+Head over to the [http://code.google.com/p/pyf/downloads/list download page].
 
 = Installing PyF =
 
 To install PyF run this in the command prompt:
 {{{
-python pyf/setup.py install
+python setup.py install
 }}}
