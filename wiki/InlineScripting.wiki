@@ -1,5 +1,5 @@
 #summary Overview of inline scripting
-#labels Manual
+#labels Manual,Featured
 
 PyF allows you to perform string replacement operations on your responses before they're displayed. Usually this is used for creating generic responses; for example to show a message like
 {{{
