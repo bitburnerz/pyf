@@ -3,7 +3,7 @@
 = Download =
 
   * [http://pyf.googlecode.com/files/pyf-0.7.1b.tar.gz Download PyF 0.7.1b]
-  * [http://pyf.googlecode.com/files/pyf-api-07b.zip 0.7b API Reference]
+  * [http://pyf.googlecode.com/files/pyf-api-07b.zip 0.7 API Reference]
 
 = Installing PyF =
 
