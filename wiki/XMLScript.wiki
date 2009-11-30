@@ -47,7 +47,7 @@ This is done through Python's [http://docs.python.org/library/functions.html bui
 
 =Adding items=
 
-Adding items is as simple as adding more tags inside `<Game>`.
+Adding items is as simple as adding tags inside `<Game>`.
 {{{
 <?xml version="1.0" encoding="UTF-8" ?>
 <Game xmlns:items="pyf.items">
@@ -69,7 +69,7 @@ Adding items is as simple as adding more tags inside `<Game>`.
 }}}
 `xmlns:items` here imports `pyf.items` for use inside the script, so `items:Room` here is actually referring to the class `pyf.items.Room`. We could, of course, refer to a class in our own Python source, but often it's just quicker to use a standard class. 
 
-Like in the case of `<Game>`, all that happens here is that the class in instantiated and initiated with some values we defined - the only difference is some of the values are defined as tag attributes. Any tags contained in `<items:Room>` are also created and afterwards moved to the room, so the shelf will be in the boring room and the pot will be on the shelf.
+Like in the case of `<Game>`, all that happens here is that the class is instantiated and initiated with some values we defined - the only difference is some of the values are defined as tag attributes. Any tags contained in `<items:Room>` are also created and afterwards moved to the room, so the shelf will be in the boring room and the pot will be on the shelf.
 
 For a list of default tags and attributes, see [DefaultTagsAndAttributes Default Tags and Attributes].
 
