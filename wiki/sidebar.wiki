@@ -6,4 +6,5 @@
   * *Learn PyF*
     * [GettingStarted Get started]
     * [InputHandling Handling User Input]
+    * [XMLScript Understanding Scripts]
   * [APIReference API Reference]
