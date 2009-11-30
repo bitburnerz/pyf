@@ -21,3 +21,5 @@ than
 {{{
 [module.Shelf.owner == module.Shed and 'some text' or 'other text']
 }}}
+
+NOTE: For PyF archives, `module` will be `__builtin__` rather than `__init__.py`.
