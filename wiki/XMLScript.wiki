@@ -71,6 +71,8 @@ Adding items is as simple as adding more tags inside `<Game>`.
 
 Like in the case of `<Game>`, all that happens here is that the class in instantiated and initiated with some values we defined - the only difference is some of the values are defined as tag attributes. Any tags contained in `<items:Room>` are also created and afterwards moved to the room, so the shelf will be in the boring room and the pot will be on the shelf.
 
+For a list of default tags and attributes, see [DefaultTagsAndAttributes Default Tags and Attributes].
+
 =Using locals()=
 
 As your game grows, you'll find it hard to update the dict you pass to `createFromScript`. You could write a function for automatically collecting any classes you want to use from the local namespace, which would be the best solution - as a quicker fix, however, you can call `locals()` to get a dict containing any definitions in the local namespace. You can pass this dict to `createFromScript` and it'll work pretty much like you expect. A word of caution though: the script will try to call any definition it encounters in the XML and the dict. If your source has a line `attr = "my string"` the script will try to call the string as soon as it encounters the line `<attr>`.
