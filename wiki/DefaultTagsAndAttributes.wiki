@@ -1,4 +1,5 @@
 #summary List of default tags and attributes
+#labels Manual
 
 This page lists some of the tags and attributes to available for different classes.
 
