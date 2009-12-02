@@ -8,7 +8,7 @@ PyF allows you to define custom functionality for items relatively easily, but m
 
 =Adding properties=
 
-You can add properties in the class definition of your `Item` by definining `props` as a tuple containing `Property` instaces or through a script, by adding property classes inside your `Item` tag. In the first case you can customize the property's behavior by passing arguments to its constructor and in the latter you can use the `<attr>` tag.
+You can add properties in the class definition of your `Item` by definining `props` as a tuple containing `Property` instaces, or through a script by adding property classes inside your `Item` tag. In the first case you can customize the property's behavior by passing arguments to its constructor and in the latter you can use the `<attr>` tag.
 
 If you need to add properties at runtime, you can use the `Item.addProp` method, but you should always call `Item.finalizeProps` after you're done adding them.
 
