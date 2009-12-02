@@ -7,4 +7,5 @@
     * [GettingStarted Get started]
     * [InputHandling Handling User Input]
     * [XMLScript Understanding Scripts]
+    * [Properties Understanding Properties]
   * [APIReference API Reference]
