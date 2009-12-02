@@ -1,6 +1,12 @@
 #summary Creating a basic game in PyF
 #labels Featured
 
+=Work in progress=
+
+This article is still work in progress. For an example of a working game, check [CloakOfDarkness Cloak of Darkness in PyF].
+
+=Introduction=
+
 This tutorial goes through the process of creating a basic game in PyF. It expects you to know the basics of object-oriented programming in Python; if you're still learning, I warmly recommend  [http://www.swaroopch.com/notes/Python_en:Table_of_Contents A Byte of Python] by Swaroop C H. You can read it online for free at his site.
 
 A typical PyF game is split into 2 files, your Python source and an external script. Most of the time you'll be working on the script as it contains the most important part of your game: the actual text. The Python file is there just to set up the game and add any functionality that's not included in the default library.
