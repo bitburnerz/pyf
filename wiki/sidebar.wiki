@@ -8,4 +8,5 @@
     * [InputHandling Handling User Input]
     * [XMLScript Understanding Scripts]
     * [Properties Understanding Properties]
+    * [Events Event Handling]
   * [APIReference API Reference]
