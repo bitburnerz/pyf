@@ -1,4 +1,5 @@
 #summary Overview of PyF properties
+#labels Manual
 
 Properties are the standard way to add reusable functionality to an `Item`.
 
