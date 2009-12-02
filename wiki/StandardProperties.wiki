@@ -1,4 +1,5 @@
 #summary List of properties in the PyF standard library by module
+#labels Manual
 
 For a more complete documentation, see the [APIReference API reference]. 
 
