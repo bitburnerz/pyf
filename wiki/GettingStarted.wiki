@@ -3,7 +3,7 @@
 
 =Work in progress=
 
-This article is still work in progress. For an example of a working game, check [CloakOfDarkness Cloak of Darkness in PyF].
+This article is work in progress. For an example of a working game, check [CloakOfDarkness Cloak of Darkness in PyF].
 
 =Introduction=
 
