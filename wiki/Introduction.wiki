@@ -6,7 +6,7 @@ PyF is a free, cross-platform Python library for writing interactive fiction. It
 = What is... =
 
   * [http://en.wikipedia.org/wiki/Interactive_fiction Interactive fiction?]
-  * [http://en.wikipedia.org/wiki/Python Python?]
+  * [http://en.wikipedia.org/wiki/Python_%28programming_language%29 Python?]
 
 = What does PyF look like? =
 
